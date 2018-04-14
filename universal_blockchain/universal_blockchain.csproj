@@ -12,5 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Context\" />
+    <Folder Include="Encrypt\" />
+    <Folder Include="Client\" />
+    <Folder Include="Logic\" />
   </ItemGroup>
 </Project>
