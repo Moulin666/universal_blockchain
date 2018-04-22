@@ -7,10 +7,10 @@ namespace universal_blockchain
 {
 	public class Settings
     {
-        public Node node = new Node();
-        string path = GetApplicationRoot() + "\\";
-
-        public void save(Node node)
+        public static Node node = new Node();
+        static string path = GetApplicationRoot() + "\\";
+    
+        public static void save(Node node)
         {
             using (StreamWriter file = File.CreateText(path+"settings.json"))
             {
@@ -20,12 +20,12 @@ namespace universal_blockchain
 
         }
 
-        public void load()
+        public static void load()
         {
             using (StreamReader file = File.OpenText(path+"settings.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                this.node = (Node)serializer.Deserialize(file, typeof(Node));
+                node = (Node)serializer.Deserialize(file, typeof(Node));
                 
             }
         }
