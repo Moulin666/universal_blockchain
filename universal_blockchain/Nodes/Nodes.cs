@@ -1,13 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace universal_blockchain.Nodes
 {
-    class Nodes_manager
+	class Nodes_manager
     {
         static List<Node> nodes = new List<Node>();
         private string path = GetApplicationRoot() + "\\";

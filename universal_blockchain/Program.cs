@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Diagnostics;
+using log4net;
 using universal_blockchain.Nodes;
+
 namespace universal_blockchain
 {
-    class Program
+	class Program
     {
-        static void Main(string[] args)
+		private static ILog log { get; set; }
+
+		static void Main(string[] args)
         {
-            System.Diagnostics.Stopwatch sw = new Stopwatch();
+			log = Configuration.GetLogger();
+			log.Info("Application started");
+
+			Stopwatch sw = new Stopwatch();
             sw.Start();
             //Start server non-blocking
 
             //Regular console code
             Settings settings = new Settings();
-            /*Node node = new Node
+			/*Node node = new Node
             {
                 node_name = "Test",
                 node_region = "MSK",
@@ -27,7 +34,7 @@ namespace universal_blockchain
             Console.WriteLine(settings.node.node_ip);
             Console.WriteLine(settings.node.node_encrypt_key);
             Console.ReadKey();*/
-            Nodes_manager nodes = new Nodes_manager();
+			Nodes_manager nodes = new Nodes_manager();
             nodes.load();
             
             for (int i =0;i<100000;i++)
