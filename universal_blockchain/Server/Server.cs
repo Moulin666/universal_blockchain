@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using universal_blockchain.Encrypt;
 
 namespace universal_blockchain.Server
 {
@@ -53,7 +54,7 @@ namespace universal_blockchain.Server
             while (bClientConnected)
             {
                 // reads from stream
-                sData = sReader.ReadLine();
+                sData = TextEncryptor.Decrypt(sReader.ReadLine(),Settings.node.node_encrypt_key);
 
                 // shows content on the console.
                 Console.WriteLine("(Server)Client data: " + sData);

@@ -9,7 +9,7 @@ namespace universal_blockchain
     {
 		public static ILog GetLogger()
 		{
-			GlobalContext.Properties["LogFileName"] = "AppName";
+			GlobalContext.Properties["LogFileName"] = "Universal_Blockchain";
 			var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 			XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 

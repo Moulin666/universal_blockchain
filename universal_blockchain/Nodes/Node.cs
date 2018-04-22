@@ -12,6 +12,7 @@ namespace universal_blockchain.Nodes
         public string node_ip { get; set; }
         public string node_is_online { get; set; }
         public string node_type { get; set; }
+        public string node_private_key { get; set; }
 
     }
 }

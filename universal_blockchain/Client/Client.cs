@@ -1,9 +1,8 @@
-﻿
-
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using universal_blockchain.Encrypt;
 
 namespace universal_blockchain.Client
 {
@@ -39,7 +38,7 @@ namespace universal_blockchain.Client
                     break;
                 }
                 Console.Write("(Client)Введите ссобщение ");
-                sData = Console.ReadLine();
+                sData = TextEncryptor.Encrypt(Console.ReadLine(),Settings.node.node_encrypt_key);
                 if (sData == "exit")
                 {
                     
@@ -54,7 +53,7 @@ namespace universal_blockchain.Client
                 _sWriter.Flush();
 
                 // if you want to receive anything
-                String sDataIncomming = _sReader.ReadLine();
+                String sDataIncomming = TextEncryptor.Decrypt(_sReader.ReadLine(), Settings.node.node_private_key);
                 Console.WriteLine("(Client)Answer from server: "+ sDataIncomming);
             }
 
