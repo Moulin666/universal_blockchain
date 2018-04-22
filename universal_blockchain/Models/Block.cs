@@ -49,3 +49,4 @@ namespace universal_blockchain.Models
             this.region = region;
         }
     }
+}
