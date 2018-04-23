@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace universal_blockchain.Encrypt
 {
-    public class RSA_encrypt
+	public class RSA_encrypt
     {
 		public static RSAParameters pubkey;
 		public static RSAParameters privatekey;
 
 		public static void initialize()
 		{
-			if (Settings.node.node_encrypt_key == "")
+			if (Settings.node.node_encrypt_key == "" || Settings.node.node_private_key == "")
 			{
 				var csp = new RSACryptoServiceProvider(2048);
 
@@ -89,17 +85,45 @@ namespace universal_blockchain.Encrypt
             }
         }
 
-        static public byte[] Decryption(byte[] Data, RSAParameters RSAKey, bool DoOAEPPadding)
+		public static string Encryption(string plainTextData,String node_pub_key)
         {
             try
             {
-                byte[] decryptedData;
-                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-                {
-                    RSA.ImportParameters(RSAKey);
-                    decryptedData = RSA.Decrypt(Data, DoOAEPPadding);
-                }
-                return decryptedData;
+                var csp = new RSACryptoServiceProvider();
+				csp.ImportParameters(KeyToParametrs(node_pub_key));
+
+                //for encryption, always handle bytes...
+                var bytesPlainTextData = System.Text.Encoding.UTF8.GetBytes(plainTextData);
+
+                //apply pkcs#1.5 padding and encrypt our data 
+                var bytesCypherText = csp.Encrypt(bytesPlainTextData, false);
+
+
+                return Convert.ToBase64String(bytesCypherText);
+
+            }
+            catch (CryptographicException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+		static public string Decryption(string encr_txt)
+        {
+            try
+            {
+				var bytesCypherText = Convert.FromBase64String(encr_txt);
+
+                //we want to decrypt, therefore we need a csp and load our private key
+                var csp = new RSACryptoServiceProvider();
+				csp.ImportParameters(privatekey);
+
+                //decrypt and strip pkcs#1.5 padding
+                var bytesPlainTextData = csp.Decrypt(bytesCypherText, false);
+
+                //get our original plainText back...
+				return System.Text.Encoding.UTF8.GetString(bytesPlainTextData);
             }
             catch (CryptographicException e)
             {

@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
 using log4net;
-using universal_blockchain.Nodes;
-using universal_blockchain.Server;
-using universal_blockchain.Client;
-using System.Net;
-using System.Security.Cryptography;
 using universal_blockchain.Encrypt;
 
 namespace universal_blockchain
@@ -24,7 +18,10 @@ namespace universal_blockchain
             log = Configuration.GetLogger();
 			log.Info("Application started");
 			RSA_encrypt.initialize();
-
+			Console.WriteLine("Application started");
+			var ecrpt_msg = RSA_encrypt.Encryption(Console.ReadLine());
+			Console.WriteLine(ecrpt_msg);
+			Console.WriteLine(RSA_encrypt.Decryption(ecrpt_msg));
             /*TcpServer tcpServer = new TcpServer(5000,IPAddress.Parse(Settings.node.node_ip));
             Thread ServerThread = new Thread(tcpServer.LoopClients);
             ServerThread.Start();
