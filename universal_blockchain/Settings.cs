@@ -8,9 +8,9 @@ namespace universal_blockchain
 	public class Settings
     {
         public static Node node = new Node();
-        static string path = GetApplicationRoot() + "\\";
+        static string path = GetApplicationRoot() + "";
     
-        public static void save(Node node)
+        public static void save()
         {
             using (StreamWriter file = File.CreateText(path+"settings.json"))
             {

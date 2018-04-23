@@ -6,6 +6,8 @@ using universal_blockchain.Nodes;
 using universal_blockchain.Server;
 using universal_blockchain.Client;
 using System.Net;
+using System.Security.Cryptography;
+using universal_blockchain.Encrypt;
 
 namespace universal_blockchain
 {
@@ -17,20 +19,13 @@ namespace universal_blockchain
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Node node = new Node
-            {
-                node_name = "Test",
-                node_region = "MSK",
-                node_type = "Master",
-                node_encrypt_key = "",
-                node_ip = "192.168.1.100"
-            };
-            Settings.save(node);
+          
             Settings.load();
             log = Configuration.GetLogger();
 			log.Info("Application started");
-            
-            TcpServer tcpServer = new TcpServer(5000,IPAddress.Parse(Settings.node.node_ip));
+			RSA_encrypt.initialize();
+
+            /*TcpServer tcpServer = new TcpServer(5000,IPAddress.Parse(Settings.node.node_ip));
             Thread ServerThread = new Thread(tcpServer.LoopClients);
             ServerThread.Start();
 
