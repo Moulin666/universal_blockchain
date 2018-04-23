@@ -38,14 +38,23 @@ namespace universal_blockchain
                 Console.WriteLine("Введите регион");
                 node.node_region = Console.ReadLine();
 
-            }
+                Console.WriteLine("Введите тип");
+                node.node_type = Console.ReadLine();
 
-            using (StreamReader file = File.OpenText(path+"settings.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                node = (Node)serializer.Deserialize(file, typeof(Node));
-                
+                node.node_is_online = "true";
+                save();
+
             }
+            else
+            {
+                using (StreamReader file = File.OpenText(path + "settings.json"))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    node = (Node)serializer.Deserialize(file, typeof(Node));
+
+                }
+            }
+            
         }
 
         public static string GetApplicationRoot()

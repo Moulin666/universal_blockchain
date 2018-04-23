@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -12,15 +13,15 @@ namespace universal_blockchain.Server
     {
         private TcpListener _server;
         private Boolean _isRunning;
-        
+        private static ILog log { get; set; }
 
         public TcpServer(int port,IPAddress ip)
         {
             _server = new TcpListener(ip, port);
             _server.Start();
-
+            log = Configuration.GetLogger();
             _isRunning = true;
-            Console.WriteLine("Server started on IP: "+ip.ToString()+":"+port.ToString());
+            log.Info("Server started on IP: " + ip.ToString() + ":" + port.ToString());
         }
 
         public void LoopClients()
@@ -50,13 +51,14 @@ namespace universal_blockchain.Server
 
             Boolean bClientConnected = true;
             String sData = null;
-
+            log.Info("Client connected: "+ ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString());
             while (bClientConnected)
             {
                 // reads from stream
                 sData = TextEncryptor.Decrypt(sReader.ReadLine(),Settings.node.node_encrypt_key);
 
                 // shows content on the console.
+                log.Info("(Server)Client data: " + sData);
                 Console.WriteLine("(Server)Client data: " + sData);
 
                 if (sData == "exit")

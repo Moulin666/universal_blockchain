@@ -26,7 +26,7 @@ namespace universal_blockchain.Encrypt
 				Settings.node.node_encrypt_key = KeyToString(pubkey);
 				Settings.node.node_private_key = KeyToString(privatekey);
 				Settings.save();
-				Settings.load();
+				
 			}
 			else
 			{

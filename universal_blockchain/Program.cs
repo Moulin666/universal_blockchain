@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
+using System.Threading;
 using log4net;
 using universal_blockchain.Encrypt;
+using universal_blockchain.Server;
 
 namespace universal_blockchain
 {
@@ -11,14 +14,22 @@ namespace universal_blockchain
 
 		static void Main(string[] args)
         {
+            log = Configuration.GetLogger();
             Stopwatch sw = new Stopwatch();
             sw.Start();
-          
+            
             Settings.load();
-            log = Configuration.GetLogger();
+            log.Info("Settings load");
 			log.Info("Application started");
 			RSA_encrypt.initialize();
+            log.Info("Encrypt initializate");
 			Console.WriteLine("Application started");
+
+            TcpServer tcpServer = new TcpServer(5000,IPAddress.Parse(Settings.node.node_ip));
+            Thread ServerThread = new Thread(tcpServer.LoopClients);
+            ServerThread.Start();
+            log.Info("Server started");
+
 			var ecrpt_msg = RSA_encrypt.Encryption(Console.ReadLine());
 			Console.WriteLine(ecrpt_msg);
 			Console.WriteLine(RSA_encrypt.Decryption(ecrpt_msg));
