@@ -2,6 +2,7 @@
 using System.IO;
 using universal_blockchain.Nodes;
 using System.Text.RegularExpressions;
+using System;
 
 namespace universal_blockchain
 {
@@ -22,6 +23,23 @@ namespace universal_blockchain
 
         public static void load()
         {
+            if (!File.Exists(path + "settings.json"))
+            {
+                using (FileStream fs = File.Create(path + "nodes.json"))
+                {
+                    fs.Close();
+                }
+                Console.WriteLine("Введите имя ноды");
+                node.node_name = Console.ReadLine();
+
+                Console.WriteLine("Введите ip");
+                node.node_ip = Console.ReadLine();
+
+                Console.WriteLine("Введите регион");
+                node.node_region = Console.ReadLine();
+
+            }
+
             using (StreamReader file = File.OpenText(path+"settings.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
