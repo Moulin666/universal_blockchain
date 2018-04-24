@@ -25,10 +25,10 @@ namespace universal_blockchain
             log.Info("Encrypt initializate");
 			Console.WriteLine("Application started");
 
-            TcpServer tcpServer = new TcpServer(5000,IPAddress.Parse(Settings.node.node_ip));
+            /*TcpServer tcpServer = new TcpServer(5000,IPAddress.Parse(Settings.node.node_ip));
             Thread ServerThread = new Thread(tcpServer.LoopClients);
             ServerThread.Start();
-            log.Info("Server started");
+            log.Info("Server started");*/
 
 			var ecrpt_msg = RSA_encrypt.Encryption(Console.ReadLine());
 			Console.WriteLine(ecrpt_msg);

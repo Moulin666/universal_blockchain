@@ -16,7 +16,7 @@ namespace universal_blockchain.Logic
             Response(message);
         }
 
-        public string Response()
+        public string Response(Message message)
         {
             var answer = "Sucess";
             return answer;
