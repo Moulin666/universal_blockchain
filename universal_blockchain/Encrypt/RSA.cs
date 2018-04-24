@@ -34,7 +34,7 @@ namespace universal_blockchain.Encrypt
                         fs.Close();
                     }
 
-                    using (StreamWriter file = File.CreateText(path + "settings.json"))
+                    using (StreamWriter file = File.CreateText(path + "privatekey.json"))
                     {
                         JsonSerializer serializer = new JsonSerializer();
                         serializer.Serialize(file, KeyToString(privatekey));
@@ -45,8 +45,9 @@ namespace universal_blockchain.Encrypt
                 {
                     using (StreamReader file = File.OpenText(path + "privatekey.json"))
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        privatekey = KeyToParametrs((string)serializer.Deserialize(file, typeof(String)));
+
+                        var str = file.ReadLine();
+                        privatekey = KeyToParametrs(str);
 
                     }
                 }

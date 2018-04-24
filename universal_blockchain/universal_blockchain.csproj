@@ -14,4 +14,7 @@
   <ItemGroup>
     <Folder Include="Context\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="settings.json" />
+  </ItemGroup>
 </Project>
