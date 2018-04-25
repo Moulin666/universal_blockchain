@@ -61,9 +61,13 @@ namespace universal_blockchain.Encrypt
 			else
 			{
 				pubkey = KeyToParametrs(Settings.node.node_encrypt_key);
-				privatekey = KeyToParametrs(Settings.node.node_private_key);
+                using (StreamReader file = File.OpenText(path + "privatekey.json"))
+                {
 
-			}
+                    JsonSerializer serializer = new JsonSerializer();
+                    privatekey = KeyToParametrs((string)serializer.Deserialize(file, typeof(string)));
+                }
+            }
 
             
 		}
